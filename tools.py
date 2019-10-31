@@ -50,4 +50,5 @@ def get_blog_info(cards, i, name, page):
 
 
 if __name__ == '__main__':
-    checkTime("3-5")
+    a = checkTime("3-5", day)
+    print(a)

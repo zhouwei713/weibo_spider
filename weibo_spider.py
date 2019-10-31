@@ -23,7 +23,8 @@ class WeiBo(object):
     def get_uid(self):
         try:
             url = 'https://s.weibo.com/user?q=%s' % self.name
-            res = requests.get(url).text
+            print(url)
+            res = requests.get(url, headers=self.headers).text
             content = BeautifulSoup(res, 'html.parser')
             user = content.find('div', attrs={'class': 'card card-user-b s-pg16 s-brt1'})
             user_info = user.find('div', attrs={'class': 'info'}).find('div')
@@ -36,6 +37,9 @@ class WeiBo(object):
                 elif title == '微博会员':
                     uid = href_list[2].get('uid')
                     return uid
+                elif title == '微博官方认证':
+                    uid = href_list[2].get('uid')
+                    return uid
             else:
                 print("There are something wrong")
                 return False
@@ -43,6 +47,7 @@ class WeiBo(object):
             raise
 
     def get_userinfo(self, uid):
+        print(uid)
         try:
             url = 'https://m.weibo.cn/api/container/getIndex?type=uid&value=%s' % uid
             res = requests.get(url).json()
@@ -104,36 +109,9 @@ class WeiBo(object):
                         if blog_text in mblog_text:
                             print("找到相关微博")
                             return blog_dict['mblog_id']
-                        elif checkTime(create_time) is False:
+                        elif checkTime(create_time, config.day) is False:
                             print("没有找到相关微博")
                             return blog_list
-                        # if cards[i]['card_type'] == 9:
-                        #     scheme = cards[i]['scheme']  # 微博地址
-                        #     mblog = cards[i]['mblog']
-                        #     mblog_text = mblog['text']
-                        #     create_time = mblog['created_at']
-                        #     mblog_id = mblog['id']
-                        #     reposts_count = mblog['reposts_count']  # 转发数量
-                        #     comments_count = mblog['comments_count']  # 评论数量
-                        #     attitudes_count = mblog['attitudes_count']  # 点赞数量
-                        #     with open(name, 'a', encoding='utf-8') as f:
-                        #         f.write("----第"+str(page)+"页，第"+str(i+1)+"条微博----"+"\n")
-                        #         f.write("微博地址：" + str(scheme) + "\n" + "发布时间：" + str(create_time) + "\n"
-                        #                 + "微博内容：" + mblog_text + "\n" + "点赞数：" + str(attitudes_count) + "\n"
-                        #                 + "评论数：" + str(comments_count) + "\n" + "转发数：" + str(reposts_count) + "\n")
-                        #     blog_dict['mblog_id'] = mblog_id
-                        #     blog_dict['mblog_text'] = mblog_text
-                        #     blog_dict['create_time'] = create_time
-                        #     blog_list.append(blog_dict)
-                        #     if blog_text in mblog_text:
-                        #         print("找到相关微博")
-                        #         return blog_list
-                        #     elif checkTime(create_time) is False:
-                        #         print("没有找到相关微博")
-                        #         return blog_list
-                        # else:
-                        #     print("没有任何微博哦")
-                        #     break
                     page += 1
                     time.sleep(config.sleep_time)
                 else:

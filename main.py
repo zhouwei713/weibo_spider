@@ -22,7 +22,6 @@ def main(name, spider_type, text, page, iscomment, comment_page):
     if spider_type == "Text" or spider_type == "text":
         print("爬取微博...")
         blog_info = weibo.get_blog_by_text(userinfo['containerid'], text, name)
-        print("爬取微博结束")
         if isinstance(blog_info, str):
             print("搜索到微博，爬取成功")
             if iscomment == "Yes" or iscomment == "YES" or iscomment == "yes":
