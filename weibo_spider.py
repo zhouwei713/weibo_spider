@@ -64,6 +64,7 @@ class WeiBo(object):
             raise
 
     def get_blog_by_page(self, containerid, page, name):
+        print('containerid: ', containerid)
         blog_list = []
         if page > 50:
             print("页数不能大于50")
@@ -86,6 +87,7 @@ class WeiBo(object):
             raise
 
     def get_blog_by_text(self, containerid, blog_text, name):
+        print('containerid: ', containerid)
         blog_list = []
         page = 1
         while True:
@@ -97,25 +99,28 @@ class WeiBo(object):
                     return False
                 res = requests.get(url).json()
                 cards = res['data']['cards']
+                print('page', page)
+                print('cards: ', cards)
                 if len(cards) > 0:
                     for i in range(len(cards)):
                         print("-----正在爬取第" + str(page) + "页，第" + str(i+1) + "条微博------")
                         blog_dict = get_blog_info(cards, i, name, page)
+                        if blog_dict is False:
+                            continue
                         blog_list.append(blog_dict)
-                        if blog_list is False:
-                            break
                         mblog_text = blog_dict['mblog_text']
                         create_time = blog_dict['create_time']
                         if blog_text in mblog_text:
-                            print("找到相关微博")
+                            print("成功找到相关微博")
                             return blog_dict['mblog_id']
                         elif checkTime(create_time, config.day) is False:
-                            print("没有找到相关微博")
+                            print("在配置的时间内没有找到相关微博")
                             return blog_list
+                        time.sleep(config.sleep_time)
                     page += 1
                     time.sleep(config.sleep_time)
                 else:
-                    print("没有任何微博哦")
+                    print("没有任何微博哦！")
                     break
 
             except:

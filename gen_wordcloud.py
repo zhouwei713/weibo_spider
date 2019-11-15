@@ -32,5 +32,5 @@ def wordcloud(file, name, pic=None):
 
 
 if __name__ == '__main__':
-    wordcloud("1572486436comment.csv", "lixiaolu2", 'xinsui.jpg')
-    # wordcloud("comment.csv", "qiaobiluo", 'ciyun2.png')
+    # wordcloud("1573790059comment.csv", "lixiaolu3", 'xinsui.jpg')
+    wordcloud("1573796702comment.csv", "guozu", 'ciyun.jpg')

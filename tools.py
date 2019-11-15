@@ -26,6 +26,7 @@ def checkTime(inputtime, day):
 
 def get_blog_info(cards, i, name, page):
     blog_dict = {}
+    print('card_type: ', cards[i]['card_type'])
     if cards[i]['card_type'] == 9:
         scheme = cards[i]['scheme']  # 微博地址
         mblog = cards[i]['mblog']
@@ -45,7 +46,7 @@ def get_blog_info(cards, i, name, page):
         blog_dict['create_time'] = create_time
         return blog_dict
     else:
-        print("没有任何微博哦")
+        print("没有在card中发现任何微博")
         return False
 
 
