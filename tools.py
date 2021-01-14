@@ -11,7 +11,8 @@ from config import day
 
 def checkTime(inputtime, day):
     try:
-        intime = datetime.datetime.strptime("2019-" + inputtime, '%Y-%m-%d')
+        intime = datetime.datetime.strptime(inputtime, '%Y-%m-%d')
+        # intime = datetime.datetime.strptime("2019-" + inputtime, '%Y-%m-%d')
     except:
         return "时间转换失败"
 
@@ -51,5 +52,6 @@ def get_blog_info(cards, i, name, page):
 
 
 if __name__ == '__main__':
-    a = checkTime("3-5", day)
+    """2020-12-31"""
+    a = checkTime("2020-12-31", day)
     print(a)
